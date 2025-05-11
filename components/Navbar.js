@@ -48,6 +48,9 @@ export default function Navbar() {
               <Link href="#projects" className={styles.navLink}>Projects</Link>
             </li>
             <li>
+              <Link href="/data-visualization" className={styles.navLink}>Data Viz</Link>
+            </li>
+            <li>
               <Link href="#contact" className={styles.navLink}>Contact</Link>
             </li>
             <li>

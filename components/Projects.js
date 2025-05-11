@@ -1,10 +1,22 @@
 import styles from './Projects.module.css';
+import Link from 'next/link';
 
 export default function Projects() {
-  // Sample project data - in a real application, this could come from an API or CMS
+  // Project data
   const projects = [
     {
       id: 1,
+      title: 'Data Visualization Project',
+      description: 'Interactive data visualization project showcasing advanced charting techniques and data analysis capabilities using modern web technologies.',
+      tags: ['D3.js', 'JavaScript', 'Data Analysis', 'Visualization'],
+      image: '/projects/data-visualization-image.svg',
+      demoUrl: '/data-visualization',
+      localProject: true,
+      internalLink: true,
+      githubUrl: 'https://github.com/bsabio/IS219_project1'
+    },
+    {
+      id: 2,
       title: 'E-commerce Platform',
       description: 'A full-featured online store with product catalog, shopping cart, and secure checkout.',
       tags: ['React', 'Node.js', 'MongoDB', 'Stripe'],
@@ -13,7 +25,7 @@ export default function Projects() {
       githubUrl: '#'
     },
     {
-      id: 2,
+      id: 3,
       title: 'Task Management App',
       description: 'A productivity application for teams to organize projects, assign tasks, and track progress.',
       tags: ['Next.js', 'TypeScript', 'Firebase', 'Tailwind CSS'],
@@ -22,20 +34,11 @@ export default function Projects() {
       githubUrl: '#'
     },
     {
-      id: 3,
+      id: 4,
       title: 'Fitness Tracker',
       description: 'Mobile application for tracking workouts, nutrition, and health metrics with visualization.',
       tags: ['React Native', 'GraphQL', 'Apollo Client', 'D3.js'],
       image: '/projects/fitness.jpg',
-      demoUrl: '#',
-      githubUrl: '#'
-    },
-    {
-      id: 4,
-      title: 'Weather Dashboard',
-      description: 'Real-time weather monitoring application with forecast data and interactive maps.',
-      tags: ['JavaScript', 'OpenWeather API', 'Chart.js', 'Leaflet'],
-      image: '/projects/weather.jpg',
       demoUrl: '#',
       githubUrl: '#'
     }
@@ -58,18 +61,39 @@ export default function Projects() {
               <div className={styles.imageContainer}>
                 <div className={styles.overlay}>
                   <div className={styles.actions}>
-                    <a href={project.demoUrl} className={styles.actionBtn} target="_blank" rel="noopener noreferrer">
-                      Live Demo
-                    </a>
-                    <a href={project.githubUrl} className={styles.actionBtn} target="_blank" rel="noopener noreferrer">
+                    {project.internalLink ? (
+                      <Link href={project.demoUrl} className={styles.actionBtn}>
+                        View Project
+                      </Link>
+                    ) : (
+                      <a 
+                        href={project.demoUrl} 
+                        className={styles.actionBtn} 
+                        target={project.localProject ? "_self" : "_blank"} 
+                        rel="noopener noreferrer"
+                      >
+                        Live Demo
+                      </a>
+                    )}
+                    <a 
+                      href={project.githubUrl} 
+                      className={styles.actionBtn} 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                    >
                       View Code
                     </a>
                   </div>
                 </div>
-                <div className={styles.imagePlaceholder}>
-                  {/* In a real project, you would use an actual image here */}
-                  <div className={styles.placeholderText}>{project.title[0]}</div>
-                </div>
+                {project.image.includes('.svg') ? (
+                  <div className={styles.svgContainer}>
+                    <img src={project.image} alt={project.title} className={styles.projectImage} />
+                  </div>
+                ) : (
+                  <div className={styles.imagePlaceholder}>
+                    <div className={styles.placeholderText}>{project.title[0]}</div>
+                  </div>
+                )}
               </div>
               
               <div className={styles.content}>
@@ -88,7 +112,7 @@ export default function Projects() {
         
         <div className={styles.cta}>
           <p>Interested in seeing more of my work?</p>
-          <a href="https://github.com" target="_blank" rel="noopener noreferrer" className={styles.ctaButton}>
+          <a href="https://github.com/bsabio" target="_blank" rel="noopener noreferrer" className={styles.ctaButton}>
             View All Projects
           </a>
         </div>
