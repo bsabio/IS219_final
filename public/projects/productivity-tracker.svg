@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="300" height="200" viewBox="0 0 300 200" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="300" height="200" fill="#f8f9fa" rx="10" ry="10"/>
+  
+  <!-- Title Text -->
+  <text x="150" y="30" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#5a6e7d" text-anchor="middle">Productivity Goal Tracker</text>
+  
+  <!-- Progress Bar Container -->
+  <rect x="120" y="50" width="60" height="120" fill="#f1f5f9" rx="30" ry="30" stroke="#e5e7eb" stroke-width="2"/>
+  
+  <!-- Progress Bar Fill -->
+  <rect x="120" y="110" width="60" height="60" fill="url(#gradient)" rx="30" ry="30">
+    <animate attributeName="height" from="60" to="90" dur="2s" begin="0s" fill="freeze"/>
+    <animate attributeName="y" from="110" to="80" dur="2s" begin="0s" fill="freeze"/>
+  </rect>
+  
+  <!-- Activity Icons -->
+  <!-- Productive Activity -->
+  <circle cx="60" y="70" r="20" fill="#b4e6c8" opacity="0.8"/>
+  <text x="60" y="75" font-family="Arial, sans-serif" font-size="20" fill="#10b981" text-anchor="middle">+</text>
+  <line x1="85" y1="70" x2="115" y2="70" stroke="#b4e6c8" stroke-width="2" stroke-dasharray="4"/>
+  
+  <!-- Unproductive Activity -->
+  <circle cx="60" y="130" r="20" fill="#f8c2cc" opacity="0.8"/>
+  <text x="60" y="135" font-family="Arial, sans-serif" font-size="20" fill="#ef4444" text-anchor="middle">-</text>
+  <line x1="85" y1="130" x2="115" y2="130" stroke="#f8c2cc" stroke-width="2" stroke-dasharray="4"/>
+  
+  <!-- Right Side Stats -->
+  <rect x="210" y="60" width="70" height="30" fill="#ffffff" rx="5" ry="5" stroke="#e5e7eb" stroke-width="1"/>
+  <text x="245" y="80" font-family="Arial, sans-serif" font-size="12" fill="#5a6e7d" text-anchor="middle">Productive: 8</text>
+  
+  <rect x="210" y="100" width="70" height="30" fill="#ffffff" rx="5" ry="5" stroke="#e5e7eb" stroke-width="1"/>
+  <text x="245" y="120" font-family="Arial, sans-serif" font-size="12" fill="#5a6e7d" text-anchor="middle">Score: 65</text>
+  
+  <rect x="210" y="140" width="70" height="30" fill="#ffffff" rx="5" ry="5" stroke="#e5e7eb" stroke-width="1"/>
+  <text x="245" y="160" font-family="Arial, sans-serif" font-size="12" fill="#5a6e7d" text-anchor="middle">Total: 12</text>
+  
+  <!-- Gradient for Progress Bar -->
+  <defs>
+    <linearGradient id="gradient" x1="0%" y1="100%" x2="0%" y2="0%">
+      <stop offset="0%" stop-color="#f8c2cc"/>
+      <stop offset="50%" stop-color="#fbe5a2"/>
+      <stop offset="100%" stop-color="#b4e6c8"/>
+    </linearGradient>
+  </defs>
+</svg>

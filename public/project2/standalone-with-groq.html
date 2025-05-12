@@ -35,24 +35,36 @@
             color: var(--text-color);
             background-color: var(--background-color);
             line-height: 1.5;
+            margin: 0;
+            padding: 0;
+            overflow: hidden; /* Prevent scrolling on the body */
+            height: 100vh;
+            width: 100vw;
         }
         
         .chat-container {
-            max-width: 800px;
-            margin: 0 auto;
-            min-height: 100vh;
+            width: 100%;
+            height: 100vh;
+            margin: 0;
             display: flex;
             flex-direction: column;
             background-color: white;
             box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 10;
         }
         
         header {
             background: linear-gradient(to right, var(--primary-color), var(--accent-color));
             color: var(--text-color);
-            padding: 1.5rem;
+            padding: 1rem;
             text-align: center;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            flex-shrink: 0;
         }
         
         header h1 {
@@ -73,8 +85,7 @@
             display: flex;
             flex-direction: column;
             gap: 1rem;
-            min-height: 60vh;
-            max-height: 70vh;
+            height: calc(100vh - 140px); /* Account for header and input form */
         }
         
         .message {
@@ -114,6 +125,7 @@
             padding: 1rem 1.5rem;
             border-top: 1px solid var(--border-color);
             background-color: white;
+            flex-shrink: 0;
         }
         
         .input-container {
@@ -204,25 +216,34 @@
         
         /* Responsive design */
         @media (max-width: 768px) {
-            .chat-container {
-                max-width: 100%;
-                height: 100vh;
-            }
-            
             header {
-                padding: 1rem;
+                padding: 0.75rem;
             }
-            
+
+            header h1 {
+                font-size: 1.2rem;
+            }
+
+            header p {
+                font-size: 0.8rem;
+            }
+
             .chatbox {
-                padding: 1rem;
+                padding: 0.75rem;
+                height: calc(100vh - 120px);
             }
-            
+
             #chat-form {
-                padding: 0.75rem 1rem;
+                padding: 0.75rem;
             }
-            
+
             .message-content {
                 max-width: 90%;
+            }
+
+            .back-to-portfolio {
+                font-size: 0.8rem;
+                padding: 6px 10px;
             }
         }
         

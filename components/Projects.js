@@ -25,6 +25,17 @@ export default function Projects() {
       localProject: true,
       internalLink: true,
       githubUrl: 'https://github.com/bsabio/IS219_final/tree/main/public/project2'
+    },
+    {
+      id: 3,
+      title: 'Productivity Goal Tracker',
+      description: 'Interactive productivity tracker that visualizes your progress with a dynamic bar that responds to logged activities, helping you monitor and improve your productivity.',
+      tags: ['JavaScript', 'CSS3', 'Local Storage', 'Interactive UI'],
+      image: '/projects/productivity-tracker.svg',
+      demoUrl: '/project3',
+      localProject: true,
+      internalLink: true,
+      githubUrl: 'https://github.com/bsabio/IS219_final/tree/main/public/project3'
     }
   ];
 
