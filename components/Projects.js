@@ -61,23 +61,15 @@ export default function Projects() {
                         View Project
                       </Link>
                     ) : (
-                      <a 
-                        href={project.demoUrl} 
-                        className={styles.actionBtn} 
-                        target={project.localProject ? "_self" : "_blank"} 
+                      <a
+                        href={project.demoUrl}
+                        className={styles.actionBtn}
+                        target={project.localProject ? "_self" : "_blank"}
                         rel="noopener noreferrer"
                       >
                         Live Demo
                       </a>
                     )}
-                    <a 
-                      href={project.githubUrl} 
-                      className={styles.actionBtn} 
-                      target="_blank" 
-                      rel="noopener noreferrer"
-                    >
-                      View Code
-                    </a>
                   </div>
                 </div>
                 {project.image.includes('.svg') ? (

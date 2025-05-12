@@ -11,8 +11,8 @@ import styles from '../styles/DataVisualization.module.css';
 export default function DataVisualization() {
   const [depressionData, setDepressionData] = useState([]);
   const [mediaData, setMediaData] = useState([]);
-  const [activeTab, setActiveTab] = useState('combined');
-  const [selectedChart, setSelectedChart] = useState('bar');
+  const [activeTab, setActiveTab] = useState('combined'); // Only combined and media tabs now
+  const [selectedChart, setSelectedChart] = useState('double');
   const [isClient, setIsClient] = useState(false);
   
   // Set isClient to true once component mounts
@@ -256,77 +256,9 @@ export default function DataVisualization() {
     );
   };
 
-  // Function to render a line chart
-  const renderLineChart = (data, maxValue, color) => {
-    if (!data || data.length === 0) return null;
+  // Line chart rendering function has been removed
 
-    const width = 800;
-    const height = 300;
-    const padding = 40;
-    const chartWidth = width - (padding * 2);
-    const chartHeight = height - (padding * 2);
-
-    // Calculate points for the polyline
-    const points = data.map((item, index) => {
-      const x = padding + (index * (chartWidth / (data.length - 1)));
-      const y = height - padding - ((item.value / maxValue) * chartHeight);
-      return `${x},${y}`;
-    }).join(' ');
-
-    return (
-      <div className={styles.lineChartContainer}>
-        <svg width="100%" height={height} viewBox={`0 0 ${width} ${height}`} preserveAspectRatio="xMidYMid meet">
-          {/* X and Y axes */}
-          <line x1={padding} y1={height - padding} x2={width - padding} y2={height - padding} stroke="#ccc" strokeWidth="1" />
-          <line x1={padding} y1={padding} x2={padding} y2={height - padding} stroke="#ccc" strokeWidth="1" />
-
-          {/* Horizontal grid lines */}
-          {[0.25, 0.5, 0.75].map((val, i) => (
-            <line
-              key={i}
-              x1={padding}
-              y1={height - padding - (chartHeight * val)}
-              x2={width - padding}
-              y2={height - padding - (chartHeight * val)}
-              stroke="#eee"
-              strokeWidth="1"
-              strokeDasharray="5,5"
-            />
-          ))}
-
-          {/* Data points and line */}
-          <polyline
-            fill="none"
-            stroke={color}
-            strokeWidth="3"
-            points={points}
-          />
-
-          {/* Data points */}
-          {data.map((item, index) => {
-            const x = padding + (index * (chartWidth / (data.length - 1)));
-            const y = height - padding - ((item.value / maxValue) * chartHeight);
-            return (
-              <g key={index}>
-                <circle cx={x} cy={y} r="5" fill={color} />
-                <text x={x} y={y - 15} textAnchor="middle" fontSize="12" fill={color}>{item.value.toFixed(1)}</text>
-              </g>
-            );
-          })}
-
-          {/* X-axis labels */}
-          {data.map((item, index) => {
-            const x = padding + (index * (chartWidth / (data.length - 1)));
-            return (
-              <text key={index} x={x} y={height - padding + 20} textAnchor="middle" fontSize="12">{item.label}</text>
-            );
-          })}
-        </svg>
-      </div>
-    );
-  };
-
-  // Function to render a double line chart
+  // Comparative line chart with normalized data (percentages)
   const renderDoubleLineChart = (data1, data2, maxValue1, maxValue2) => {
     if (!data1 || !data2 || data1.length === 0 || data2.length === 0) return null;
 
@@ -352,16 +284,24 @@ export default function DataVisualization() {
       };
     }).filter(d => d.depression !== null && d.media !== null);
 
-    // Calculate points for both lines
+    // Calculate normalized values for both datasets (0-100%)
+    const depressionMin = Math.min(...combined.map(item => item.depression));
+    const depressionMax = Math.max(...combined.map(item => item.depression));
+    const mediaMin = Math.min(...combined.map(item => item.media));
+    const mediaMax = Math.max(...combined.map(item => item.media));
+
+    // Calculate points for both lines (normalized to 0-100%)
     const depressionPoints = combined.map((item, index) => {
       const x = padding + (index * (chartWidth / (combined.length - 1)));
-      const y = height - padding - ((item.depression / maxValue1) * chartHeight);
+      const normalizedValue = ((item.depression - depressionMin) / (depressionMax - depressionMin)) * 100;
+      const y = height - padding - ((normalizedValue / 100) * chartHeight);
       return `${x},${y}`;
     }).join(' ');
 
     const mediaPoints = combined.map((item, index) => {
       const x = padding + (index * (chartWidth / (combined.length - 1)));
-      const y = height - padding - ((item.media / maxValue2) * chartHeight);
+      const normalizedValue = ((item.media - mediaMin) / (mediaMax - mediaMin)) * 100;
+      const y = height - padding - ((normalizedValue / 100) * chartHeight);
       return `${x},${y}`;
     }).join(' ');
 
@@ -369,12 +309,12 @@ export default function DataVisualization() {
       <div className={styles.lineChartContainer}>
         <div className={styles.legendContainer}>
           <div className={styles.legendItem}>
-            <div className={styles.legendColor} style={{ backgroundColor: 'rgba(165, 200, 228, 0.7)' }}></div>
-            <span>Depression Rate (%)</span>
+            <div className={styles.legendColor} style={{ backgroundColor: 'rgba(255, 99, 132, 0.7)' }}></div>
+            <span>Depression Rate (normalized %)</span>
           </div>
           <div className={styles.legendItem}>
-            <div className={styles.legendColor} style={{ backgroundColor: 'rgba(216, 194, 248, 0.7)' }}></div>
-            <span>Media Consumption (min/day)</span>
+            <div className={styles.legendColor} style={{ backgroundColor: 'rgba(54, 162, 235, 0.7)' }}></div>
+            <span>Media Consumption (normalized %)</span>
           </div>
         </div>
 
@@ -398,10 +338,23 @@ export default function DataVisualization() {
             />
           ))}
 
+          {/* Area fills for better visualization */}
+          <path
+            d={`M${padding},${height - padding} ${depressionPoints} L${width - padding},${height - padding} Z`}
+            fill="rgba(255, 99, 132, 0.3)"
+            stroke="none"
+          />
+
+          <path
+            d={`M${padding},${height - padding} ${mediaPoints} L${width - padding},${height - padding} Z`}
+            fill="rgba(54, 162, 235, 0.3)"
+            stroke="none"
+          />
+
           {/* Depression line */}
           <polyline
             fill="none"
-            stroke="rgba(165, 200, 228, 0.9)"
+            stroke="rgba(255, 99, 132, 0.9)"
             strokeWidth="3"
             points={depressionPoints}
           />
@@ -409,7 +362,7 @@ export default function DataVisualization() {
           {/* Media consumption line */}
           <polyline
             fill="none"
-            stroke="rgba(216, 194, 248, 0.9)"
+            stroke="rgba(54, 162, 235, 0.9)"
             strokeWidth="3"
             points={mediaPoints}
           />
@@ -417,21 +370,23 @@ export default function DataVisualization() {
           {/* Data points */}
           {combined.map((item, index) => {
             const x = padding + (index * (chartWidth / (combined.length - 1)));
-            const depressionY = height - padding - ((item.depression / maxValue1) * chartHeight);
-            const mediaY = height - padding - ((item.media / maxValue2) * chartHeight);
+            const depressionNormalized = ((item.depression - depressionMin) / (depressionMax - depressionMin)) * 100;
+            const mediaNormalized = ((item.media - mediaMin) / (mediaMax - mediaMin)) * 100;
+            const depressionY = height - padding - ((depressionNormalized / 100) * chartHeight);
+            const mediaY = height - padding - ((mediaNormalized / 100) * chartHeight);
 
             return (
               <g key={index}>
                 {/* Depression data point */}
-                <circle cx={x} cy={depressionY} r="5" fill="rgba(165, 200, 228, 0.9)" />
-                <text x={x} y={depressionY - 15} textAnchor="middle" fontSize="12" fill="rgba(165, 200, 228, 0.9)">
-                  {item.depression.toFixed(1)}%
+                <circle cx={x} cy={depressionY} r="6" fill="rgba(255, 99, 132, 0.9)" />
+                <text x={x} y={depressionY - 15} textAnchor="middle" fontSize="12" fill="rgba(255, 99, 132, 0.9)">
+                  {depressionNormalized.toFixed(0)}%
                 </text>
 
                 {/* Media consumption data point */}
-                <circle cx={x} cy={mediaY} r="5" fill="rgba(216, 194, 248, 0.9)" />
-                <text x={x} y={mediaY + 20} textAnchor="middle" fontSize="12" fill="rgba(216, 194, 248, 0.9)">
-                  {item.media}min
+                <circle cx={x} cy={mediaY} r="6" fill="rgba(54, 162, 235, 0.9)" />
+                <text x={x} y={mediaY + 20} textAnchor="middle" fontSize="12" fill="rgba(54, 162, 235, 0.9)">
+                  {mediaNormalized.toFixed(0)}%
                 </text>
               </g>
             );
@@ -445,28 +400,29 @@ export default function DataVisualization() {
             );
           })}
 
-          {/* Y-axis labels for depression (left) */}
-          {[0, 0.25, 0.5, 0.75, 1].map((val, i) => {
-            const yPos = height - padding - (chartHeight * val);
-            const value = (maxValue1 * val).toFixed(1);
+          {/* Y-axis labels (normalized percentages) */}
+          {[0, 25, 50, 75, 100].map((val, i) => {
+            const yPos = height - padding - (chartHeight * (val / 100));
             return (
-              <text key={`left-${i}`} x={padding - 10} y={yPos + 5} textAnchor="end" fontSize="12" fill="rgba(165, 200, 228, 0.9)">
-                {value}%
+              <text key={`y-${i}`} x={padding - 10} y={yPos + 5} textAnchor="end" fontSize="12" fill="#555">
+                {val}%
               </text>
             );
           })}
 
-          {/* Y-axis labels for media consumption (right) */}
-          {[0, 0.25, 0.5, 0.75, 1].map((val, i) => {
-            const yPos = height - padding - (chartHeight * val);
-            const value = (maxValue2 * val).toFixed(0);
-            return (
-              <text key={`right-${i}`} x={width - padding + 10} y={yPos + 5} textAnchor="start" fontSize="12" fill="rgba(216, 194, 248, 0.9)">
-                {value}min
-              </text>
-            );
-          })}
+          {/* Scale explanation */}
+          <text x={padding} y={padding - 25} textAnchor="start" fontSize="12" fill="#666">
+            Depression: {depressionMin.toFixed(1)} - {depressionMax.toFixed(1)}%
+          </text>
+          <text x={width - padding} y={padding - 25} textAnchor="end" fontSize="12" fill="#666">
+            Media: {mediaMin.toFixed(0)} - {mediaMax.toFixed(0)} min/day
+          </text>
         </svg>
+
+        <div className={styles.chartNotes}>
+          <p>Both metrics are normalized to percentages (0-100%) for direct comparison of trends.</p>
+          <p>Original values shown in the chart labels.</p>
+        </div>
       </div>
     );
   };
@@ -622,12 +578,6 @@ export default function DataVisualization() {
                 Correlation Analysis
               </button>
               <button
-                className={`${styles.chartTab} ${activeTab === 'depression' ? styles.activeTab : ''}`}
-                onClick={() => setActiveTab('depression')}
-              >
-                Depression Data
-              </button>
-              <button
                 className={`${styles.chartTab} ${activeTab === 'media' ? styles.activeTab : ''}`}
                 onClick={() => setActiveTab('media')}
               >
@@ -643,16 +593,10 @@ export default function DataVisualization() {
                 Bar Chart
               </button>
               <button
-                className={`${styles.chartTypeBtn} ${selectedChart === 'line' ? styles.activeChartType : ''}`}
-                onClick={() => setSelectedChart('line')}
-              >
-                Line Chart
-              </button>
-              <button
                 className={`${styles.chartTypeBtn} ${selectedChart === 'double' ? styles.activeChartType : ''}`}
                 onClick={() => setSelectedChart('double')}
               >
-                Comparative
+                Line Chart
               </button>
             </div>
 
@@ -672,23 +616,16 @@ export default function DataVisualization() {
                   {selectedChart === 'bar' && (
                     renderDoubleBarChart(yearlyDepressionData, yearlyMediaData)
                   )}
-                  {selectedChart === 'line' && (
-                    <div className={styles.multiLineContainer}>
-                      <div className={styles.lineChartHalf}>
-                        <h4>Depression Rates (%)</h4>
-                        {renderLineChart(yearlyDepressionData, maxYearlyDepressionValue, 'rgba(165, 200, 228, 0.9)')}
-                      </div>
-                      <div className={styles.lineChartHalf}>
-                        <h4>Media Consumption (min/day)</h4>
-                        {renderLineChart(yearlyMediaData, maxYearlyMediaValue, 'rgba(216, 194, 248, 0.9)')}
-                      </div>
-                    </div>
-                  )}
+                  {/* Line chart removed */}
                   <div className={styles.chartDescription}>
                     <p>
                       This visualization compares depression rates and digital media consumption
-                      from 2012 to 2018. The data suggests a potential correlation between
-                      increasing media usage and rising depression rates over time.
+                      from 2012 to 2018, with both metrics normalized to percentages (0-100%) for direct comparison.
+                      The data suggests a potential correlation between increasing media usage and rising depression rates.
+                    </p>
+                    <p>
+                      The normalization allows us to see the relative changes in both metrics on the same scale,
+                      making it easier to identify parallel trends regardless of their different units of measurement.
                     </p>
                     <p>
                       Note that while both metrics show an upward trend, this correlation does
@@ -699,32 +636,14 @@ export default function DataVisualization() {
                 </div>
               )}
 
-              {/* Depression Data View */}
-              {activeTab === 'depression' && processedDepressionData.length > 0 && (
-                <div>
-                  <h3 className={styles.chartTitle}>Adult Depression Data (2016-2020)</h3>
-                  {selectedChart === 'bar' && renderSimpleBarChart(processedDepressionData, maxDepressionValue)}
-                  {selectedChart === 'line' && renderLineChart(yearlyDepressionData, maxYearlyDepressionValue, 'rgba(165, 200, 228, 0.9)')}
-                  {selectedChart === 'double' && renderSimpleBarChart(processedDepressionData, maxDepressionValue)}
-                  <div className={styles.chartDescription}>
-                    <p>
-                      This chart displays depression rates across different demographics.
-                      The data shows percentages of adults reporting depression symptoms.
-                    </p>
-                    <p>
-                      Note the variation in depression rates, which provides insight into which
-                      groups may be more affected by mental health challenges.
-                    </p>
-                  </div>
-                </div>
-              )}
+              {/* Depression Data View removed */}
 
               {/* Media Usage Data View */}
               {activeTab === 'media' && processedMediaData.length > 0 && (
                 <div>
                   <h3 className={styles.chartTitle}>Digital Media Consumption (Hours/Day)</h3>
                   {selectedChart === 'bar' && renderSimpleBarChart(processedMediaData, maxMediaValue)}
-                  {selectedChart === 'line' && renderLineChart(yearlyMediaData, maxYearlyMediaValue, 'rgba(216, 194, 248, 0.9)')}
+                  {/* Line chart removed */}
                   {selectedChart === 'double' && renderSimpleBarChart(processedMediaData, maxMediaValue)}
                   <div className={styles.chartDescription}>
                     <p>

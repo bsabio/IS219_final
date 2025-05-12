@@ -22,10 +22,172 @@
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
+  padding: 20px;
 }
 
 .App-link {
   color: #61dafb;
+}
+
+/* Chart styles */
+.chart-container {
+  width: 90%;
+  max-width: 1200px;
+  height: 600px;
+  margin: 0 auto;
+  padding: 25px;
+  background: linear-gradient(145deg, rgba(55, 65, 81, 0.8), rgba(17, 24, 39, 0.95));
+  border-radius: 15px;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.4s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.chart-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, rgba(255, 99, 132, 0.7), rgba(54, 162, 235, 0.7));
+  z-index: 1;
+}
+
+/* Remove x-axis replacement line since we're going with a fully clean look */
+
+.chart-container:hover {
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35);
+  transform: translateY(-5px) scale(1.01);
+}
+
+.chart-note {
+  margin-top: 45px;
+  padding: 12px 15px;
+  font-size: 0.9rem;
+  color: #ddd;
+  text-align: center;
+  line-height: 1.6;
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  border-left: 3px solid rgba(54, 162, 235, 0.7);
+  max-width: 90%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.chart-note p {
+  margin: 6px 0;
+}
+
+.chart-note strong {
+  color: #61dafb;
+  font-weight: 600;
+}
+
+.chart-loading, .chart-error {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 400px;
+  width: 100%;
+  font-size: 1.2rem;
+  color: #ccc;
+  background-color: rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+}
+
+.chart-error {
+  color: #ff6b6b;
+}
+
+/* Loading spinner */
+.loading-spinner {
+  width: 50px;
+  height: 50px;
+  margin-bottom: 20px;
+  border: 5px solid rgba(255, 255, 255, 0.2);
+  border-top: 5px solid #61dafb;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+.retry-button {
+  margin-top: 15px;
+  padding: 8px 16px;
+  background-color: #61dafb;
+  color: #282c34;
+  border: none;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.retry-button:hover {
+  background-color: #4fa8cc;
+  transform: translateY(-2px);
+}
+
+.retry-button:disabled {
+  background-color: #61dafb80;
+  cursor: not-allowed;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.file-selector {
+  margin-bottom: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.file-selector label {
+  margin-right: 10px;
+}
+
+.csv-dropdown {
+  background-color: #444;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.csv-dropdown:hover {
+  background-color: #555;
+}
+
+.csv-dropdown:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px #61dafb;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .chart-container {
+    height: 400px;
+    padding: 10px;
+  }
+
+  h1 {
+    font-size: 1.5rem;
+  }
+
+  h2 {
+    font-size: 1.2rem;
+  }
 }
 
 @keyframes App-logo-spin {

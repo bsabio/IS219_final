@@ -60,9 +60,9 @@ export default function About() {
                   <h4>Other</h4>
                   <ul>
                     <li>Git / GitHub</li>
-                    <li>AWS / Cloud Services</li>
                     <li>Docker</li>
-                    <li>CI/CD Pipelines</li>
+                    <li>Test-Driven Development</li>
+                    <li>Database Management</li>
                     <li>Agile Methodologies</li>
                   </ul>
                 </div>

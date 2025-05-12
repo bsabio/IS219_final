@@ -61,19 +61,19 @@ export default function Contact() {
             <div className={styles.infoCard}>
               <div className={styles.infoIcon}>📧</div>
               <h3>Email</h3>
-              <p>hello@johndoe.com</p>
+              <p>bs679@njit.edu</p>
             </div>
             
             <div className={styles.infoCard}>
               <div className={styles.infoIcon}>📞</div>
               <h3>Phone</h3>
-              <p>+1 (555) 123-4567</p>
+              <p>+1 (856) 212-6214</p>
             </div>
             
             <div className={styles.infoCard}>
               <div className={styles.infoIcon}>📍</div>
               <h3>Location</h3>
-              <p>San Francisco, CA</p>
+              <p>Vineland, NJ</p>
             </div>
             
             <div className={styles.social}>
