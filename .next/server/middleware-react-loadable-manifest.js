@@ -1,1 +1,1 @@
-self.__REACT_LOADABLE_MANIFEST="{\"pages/data-visualization.js -> ../components/Footer\":{\"id\":\"pages/data-visualization.js -> ../components/Footer\",\"files\":[\"static/chunks/_pages-dir-browser_components_Footer_js.js\"]},\"pages/data-visualization.js -> ../components/Navbar\":{\"id\":\"pages/data-visualization.js -> ../components/Navbar\",\"files\":[\"static/chunks/_pages-dir-browser_components_Navbar_js.js\"]}}"
+self.__REACT_LOADABLE_MANIFEST="{}"

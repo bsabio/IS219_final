@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="300" height="200" viewBox="0 0 300 200" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="300" height="200" fill="#f0f7ff" rx="10" ry="10"/>
+  
+  <!-- Chat Bubbles -->
+  <!-- AI Message -->
+  <rect x="20" y="30" width="150" height="40" fill="#e0e7ff" rx="15" ry="15" stroke="#c7d2fe" stroke-width="1"/>
+  <text x="40" y="55" font-family="Arial, sans-serif" font-size="12" fill="#4338ca">How can I help you?</text>
+  
+  <!-- User Message -->
+  <rect x="130" y="80" width="150" height="40" fill="#f0fdf4" rx="15" ry="15" stroke="#bbf7d0" stroke-width="1"/>
+  <text x="150" y="105" font-family="Arial, sans-serif" font-size="12" fill="#166534">Tell me about AI</text>
+  
+  <!-- AI Message Streaming -->
+  <rect x="20" y="130" width="220" height="50" fill="#e0e7ff" rx="15" ry="15" stroke="#c7d2fe" stroke-width="1"/>
+  <text x="40" y="155" font-family="Arial, sans-serif" font-size="12" fill="#4338ca">
+    <tspan x="40" y="150">Artificial Intelligence is a field</tspan>
+    <tspan x="40" y="165">that focuses on creating systems...</tspan>
+  </text>
+  
+  <!-- Streaming Dots Animation -->
+  <circle cx="255" cy="155" r="3" fill="#4338ca">
+    <animate attributeName="opacity" values="0.3;1;0.3" dur="1.5s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="265" cy="155" r="3" fill="#4338ca">
+    <animate attributeName="opacity" values="0.3;1;0.3" dur="1.5s" repeatCount="indefinite" begin="0.2s"/>
+  </circle>
+  <circle cx="275" cy="155" r="3" fill="#4338ca">
+    <animate attributeName="opacity" values="0.3;1;0.3" dur="1.5s" repeatCount="indefinite" begin="0.4s"/>
+  </circle>
+</svg>

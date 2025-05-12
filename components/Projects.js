@@ -17,30 +17,14 @@ export default function Projects() {
     },
     {
       id: 2,
-      title: 'E-commerce Platform',
-      description: 'A full-featured online store with product catalog, shopping cart, and secure checkout.',
-      tags: ['React', 'Node.js', 'MongoDB', 'Stripe'],
-      image: '/projects/ecommerce.jpg',
-      demoUrl: '#',
-      githubUrl: '#'
-    },
-    {
-      id: 3,
-      title: 'Task Management App',
-      description: 'A productivity application for teams to organize projects, assign tasks, and track progress.',
-      tags: ['Next.js', 'TypeScript', 'Firebase', 'Tailwind CSS'],
-      image: '/projects/taskapp.jpg',
-      demoUrl: '#',
-      githubUrl: '#'
-    },
-    {
-      id: 4,
-      title: 'Fitness Tracker',
-      description: 'Mobile application for tracking workouts, nutrition, and health metrics with visualization.',
-      tags: ['React Native', 'GraphQL', 'Apollo Client', 'D3.js'],
-      image: '/projects/fitness.jpg',
-      demoUrl: '#',
-      githubUrl: '#'
+      title: 'AI Streaming Chat with Groq',
+      description: 'A real-time streaming chat application powered by Groq AI (Llama 3) with a customizable AI character persona, built using Server-Sent Events.',
+      tags: ['Node.js', 'Express', 'Groq AI', 'Server-Sent Events'],
+      image: '/projects/ai-chat.svg',
+      demoUrl: '/project2/standalone-with-groq.html',
+      localProject: true,
+      internalLink: true,
+      githubUrl: 'https://github.com/bsabio/IS219_final/tree/main/public/project2'
     }
   ];
 
